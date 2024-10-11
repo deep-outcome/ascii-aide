@@ -1,6 +1,100 @@
-///! American Standard Code for Information Interchange table aide.
+//! American Standard Code for Information Interchange table aide.
+
+pub use ranges::{ranges, Ranges};
+
+pub struct CodeInfo {
+    dec_code: usize,
+}
+
+pub fn aq(r: Ranges) -> Box<[CodeInfo]> {
+    let rs = ranges::aq(r);
+
+    let mut codes = Vec::new();
+    codes.into_boxed_slice()
+}
 
 mod ranges {
+
+    /// Collects and concats `RangeInclusive`s of literal listing.
+    macro_rules! ccr {
+    ( $($r:expr),*) => {
+      {
+        let mut rs = Vec::<usize>::new();
+
+        let mut cap = 0;
+        $(
+          cap += $r.end() - $r.start() + 1;
+        )*
+
+        rs.reserve_exact(cap);
+
+        $(
+          let sc = rs.spare_capacity_mut();
+          let mut wix = 0;
+          for i in $r.clone() {
+            sc[wix].write(i);
+            wix +=1;
+          }
+
+          unsafe {
+            rs.set_len(rs.len() + wix);
+          }
+        )*
+
+        rs
+      }
+    }
+  }
+
+    /// Collects and concats `RangeInclusive`s from withing for-loop iteratable.
+    #[macro_export]
+    macro_rules! ccr2 {
+        ($i:expr) => {{
+            let mut rs = Vec::<usize>::new();
+
+            let mut cap = 0;
+            for r in $i {
+                cap += r.end() - r.start() + 1;
+            }
+            rs.reserve_exact(cap);
+
+            for r in $i {
+                rs.extend_from_slice(&ccr!(r));
+            }
+
+            rs
+        }};
+    }
+
+    pub fn aq(r: Ranges) -> Box<[usize]> {
+        let rs = ranges(r);
+        ccr2!(rs).into_boxed_slice()
+    }
+
+    pub fn ranges(r: Ranges) -> &'static [RangeInclusive<usize>] {
+        match r {
+            Ranges::Printable => &PRINTABLE,
+            Ranges::Control => &CONTROL,
+            Ranges::Capital => &CAPITAL,
+            Ranges::Small => &SMALL,
+            Ranges::Letters => &LETTERS,
+            Ranges::Digits => &DIGITS,
+            Ranges::Symbols => &SYMBOLS,
+            Ranges::Table => &TABLE,
+        }
+    }
+
+    pub enum Ranges {
+        Printable,
+        Control,
+        Capital,
+        Small,
+        Letters,
+        Digits,
+        Symbols,
+        Table,
+    }
+
     use core::ops::RangeInclusive;
 
     pub const PRINTABLE: [RangeInclusive<usize>; 1] = [(32..=126)];
@@ -10,36 +104,69 @@ mod ranges {
     pub const LETTERS: [RangeInclusive<usize>; 2] = [(65..=90), (97..=122)];
     pub const DIGITS: [RangeInclusive<usize>; 1] = [(48..=57)];
     pub const SYMBOLS: [RangeInclusive<usize>; 4] = [(32..=47), (58..=64), (91..=96), (123..=126)];
+    pub const TABLE: [RangeInclusive<usize>; 1] = [(0..=127)];
 
     #[cfg(test)]
     mod tests_of_units {
 
-        trait Collector<Idx>
-        where
-            Self: Iterator<Item = Idx> + Sized,
-        {
-            fn amass(self) -> Vec<Idx> {
-                self.collect()
-            }
+        use super::{aq as aq_fn, ranges as ranges_fn, *};
+
+        #[test]
+        fn ccr() {
+            let r_1 = 0..=2;
+            let r_2 = 0..=3;
+
+            let rs = ccr!(&r_1, &r_2);
+
+            assert_eq!(7, rs.len());
+            assert_eq!(7, rs.capacity());
+            assert_eq!(2, rs[2]);
+            assert_eq!(3, rs[6]);
         }
 
-        impl Collector<usize> for RangeInclusive<usize> {}
-        impl Collector<usize> for Chain<RangeInclusive<usize>, RangeInclusive<usize>> {}
+        #[test]
+        fn ccr2() {
+            let r_1 = 0..=2;
+            let r_2 = 0..=3;
+            let rs = [r_1, r_2];
 
-        use super::*;
-        use core::iter::Chain;
+            let test = ccr2!(&rs);
 
+            assert_eq!(7, test.len());
+            assert_eq!(7, test.capacity());
+            assert_eq!(2, test[2]);
+            assert_eq!(3, test[6]);
+        }
+        
+        
+        #[test]
+        fn aq() {
+          assert_eq!(ccr2!(SYMBOLS).into_boxed_slice(), aq_fn(Ranges::Symbols));
+        }
+
+        #[test]
+        fn ranges() {
+            assert_eq!(&PRINTABLE, ranges_fn(Ranges::Printable));
+            assert_eq!(&CONTROL, ranges_fn(Ranges::Control));
+            assert_eq!(&CAPITAL, ranges_fn(Ranges::Capital));
+            assert_eq!(&SMALL, ranges_fn(Ranges::Small));
+            assert_eq!(&LETTERS, ranges_fn(Ranges::Letters));
+            assert_eq!(&DIGITS, ranges_fn(Ranges::Digits));
+            assert_eq!(&SYMBOLS, ranges_fn(Ranges::Symbols));
+            assert_eq!(&TABLE, ranges_fn(Ranges::Table));
+        }
+        
         #[test]
         fn printable() {
             let start = 0x20; // 32
             let end = 0x7e; // 126
 
             assert_eq!(1, PRINTABLE.len());
-            let printable = PRINTABLE[0].clone();
 
-            let proof = start..=end;
+            let printable = ccr2!(PRINTABLE);
+            let proof = ccr!(start..=end);
 
-            assert_eq!(proof.amass(), printable.amass());
+            assert_eq!(proof, printable);
         }
 
         #[test]
@@ -49,12 +176,11 @@ mod ranges {
             let extra = 0x7f; // 127
 
             assert_eq!(2, CONTROL.len());
-            let control = CONTROL[0].clone().chain(CONTROL[1].clone());
 
-            let mut proof = (start..=end).amass();
-            proof.push(extra);
+            let control = ccr2!(CONTROL);
+            let proof = ccr!(start..=end, extra..=extra);
 
-            assert_eq!(proof, control.amass());
+            assert_eq!(proof, control);
         }
 
         #[test]
@@ -63,11 +189,11 @@ mod ranges {
             let end = 'Z' as usize; // 90
 
             assert_eq!(1, CAPITAL.len());
-            let capital = CAPITAL[0].clone();
 
-            let proof = start..=end;
+            let capital = ccr2!(CAPITAL);
+            let proof = ccr!(start..=end);
 
-            assert_eq!(proof.amass(), capital.amass());
+            assert_eq!(proof, capital);
         }
 
         #[test]
@@ -76,11 +202,11 @@ mod ranges {
             let end = 'z' as usize; // 122
 
             assert_eq!(1, SMALL.len());
-            let small = SMALL[0].clone();
 
-            let proof = start..=end;
+            let small = ccr2!(SMALL);
+            let proof = ccr!(start..=end);
 
-            assert_eq!(proof.amass(), small.amass());
+            assert_eq!(proof, small);
         }
 
         #[test]
@@ -92,11 +218,11 @@ mod ranges {
             let end_s = 'z' as usize;
 
             assert_eq!(2, LETTERS.len());
-            let letters = LETTERS[0].clone().chain(LETTERS[1].clone());
 
-            let proof = (start_c..=end_c).chain(start_s..=end_s);
+            let letters = ccr2!(LETTERS);
+            let proof = ccr!(start_c..=end_c, start_s..=end_s);
 
-            assert_eq!(proof.amass(), letters.amass());
+            assert_eq!(proof, letters);
         }
 
         #[test]
@@ -105,11 +231,10 @@ mod ranges {
             let end = '9' as usize; // 57
 
             assert_eq!(1, DIGITS.len());
-            let digits = DIGITS[0].clone();
+            let digits = ccr2!(DIGITS);
+            let proof = ccr!(start..=end);
 
-            let proof = start..=end;
-
-            assert_eq!(proof.amass(), digits.amass());
+            assert_eq!(proof, digits);
         }
 
         #[test]
@@ -127,11 +252,13 @@ mod ranges {
             let end_4 = '~' as usize; // 126
 
             assert_eq!(4, SYMBOLS.len());
-            let mut symbols = SYMBOLS[0].clone().chain(SYMBOLS[1].clone()).amass();
-            symbols.extend_from_slice(&(SYMBOLS[2].clone()).chain(SYMBOLS[3].clone()).amass());
-
-            let mut proof = (start_1..=end_1).chain(start_2..=end_2).amass();
-            proof.extend_from_slice(&(start_3..=end_3).chain(start_4..=end_4).amass());
+            let symbols = ccr2!(SYMBOLS);
+            let proof = ccr!(
+                start_1..=end_1,
+                start_2..=end_2,
+                start_3..=end_3,
+                start_4..=end_4
+            );
 
             assert_eq!(proof, symbols);
         }
