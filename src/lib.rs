@@ -137,11 +137,10 @@ mod ranges {
             assert_eq!(2, test[2]);
             assert_eq!(3, test[6]);
         }
-        
-        
+
         #[test]
         fn aq() {
-          assert_eq!(ccr2!(SYMBOLS).into_boxed_slice(), aq_fn(Ranges::Symbols));
+            assert_eq!(ccr2!(SYMBOLS).into_boxed_slice(), aq_fn(Ranges::Symbols));
         }
 
         #[test]
@@ -155,7 +154,7 @@ mod ranges {
             assert_eq!(&SYMBOLS, ranges_fn(Ranges::Symbols));
             assert_eq!(&TABLE, ranges_fn(Ranges::Table));
         }
-        
+
         #[test]
         fn printable() {
             let start = 0x20; // 32
