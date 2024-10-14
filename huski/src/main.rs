@@ -41,9 +41,9 @@ const REFERENCE: &str = "
         https://www.ascii-code.com";
 
 const VERSION: &str = "
-        version    | 1.0.2
+        version    | 1.0.3
         repository | https://github.com/bravequickcleverfibreyarn/ascii-aide
-        author     | software9119";
+        author     | software9119.technology";
 
 const ERR_NO_PARAM: &str = "\n
         Err:: no valid parameter found";
