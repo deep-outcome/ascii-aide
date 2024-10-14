@@ -6,24 +6,24 @@ version = 3
 name = "huski"
 version = "1.0.0"
 dependencies = [
- "husky-lib",
+ "huski-lib",
 ]
 
 [[package]]
-name = "husky-auxies"
+name = "huski-auxies"
 version = "1.0.0"
 
 [[package]]
-name = "husky-lib"
+name = "huski-lib"
 version = "1.0.0"
 dependencies = [
- "husky-auxies",
- "husky-lib-core",
+ "huski-auxies",
+ "huski-lib-core",
 ]
 
 [[package]]
-name = "husky-lib-core"
+name = "huski-lib-core"
 version = "1.0.0"
 dependencies = [
- "husky-auxies",
+ "huski-auxies",
 ]

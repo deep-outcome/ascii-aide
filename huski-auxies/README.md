@@ -1,2 +1,2 @@
-# husky-auxies
-Auxiliary methods for [husky](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky) implementation.
+# huski-auxies
+Auxiliary methods for [huski](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski) implementation.

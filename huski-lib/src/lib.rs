@@ -1,17 +1,17 @@
 //! American Standard Code for Information Interchange table aide library.
 
-use husky_auxies::len;
+use huski_auxies::len;
 use core::ops::RangeInclusive;
 
-pub use husky_lib_core::ranges::*;
-pub use husky_lib_core::table::TABLE;
+pub use huski_lib_core::ranges::*;
+pub use huski_lib_core::table::TABLE;
 
 /// Same as `fn codes()` but it accepts `Ranges` as input
 /// and returns _boxed_ result.
 ///
 /// ```
-/// use husky_lib_core::ranges::{ranges, Ranges};
-/// use husky_lib::acquire;
+/// use huski_lib_core::ranges::{ranges, Ranges};
+/// use huski_lib::acquire;
 ///
 /// let rs = acquire(Ranges::Capital);
 /// assert_eq!('A', rs[0].code() as char);
@@ -56,8 +56,8 @@ impl Code {
 ///
 /// Duplicities and input order are preserved.
 /// ```
-/// use husky_lib_core::ranges::LETTERS;
-/// use husky_lib::codes;
+/// use huski_lib_core::ranges::LETTERS;
+/// use huski_lib::codes;
 ///
 /// let cs = codes(&LETTERS);
 /// assert_eq!(52, cs.len());
@@ -94,7 +94,7 @@ pub fn codes(rs: &[RangeInclusive<usize>]) -> Vec<Code> {
 
 #[cfg(test)]
 mod tests_of_units {
-    use husky_lib_core::ranges::{LETTERS, Ranges};
+    use huski_lib_core::ranges::{LETTERS, Ranges};
     use crate::{Code, acquire as acquire_fn, codes as codes_fn};
 
     #[test]
@@ -120,7 +120,7 @@ mod tests_of_units {
 
     mod codes {
         use crate::codes as codes_fn;
-        use husky_lib_core::table::TABLE;
+        use huski_lib_core::table::TABLE;
 
         #[test]
         fn basic_test() {

@@ -5,11 +5,11 @@ authors= [ "software9119.technology" ]
 edition = "2021"
 description = "ASCII table aide command line utility."
 readme = "./README.md"
-homepage = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky"
-repository = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky"
+homepage = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski"
+repository = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski"
 license = "MIT"
 keywords = ["ascii","ascii-table"]
 categories = ["encoding" , "command-line-utilities"]
 
 [dependencies]
-husky-lib = { path = "../husky-lib", version = "1.0.0" }
+huski-lib = { path = "../huski-lib", version = "1.0.0" }

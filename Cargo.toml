@@ -1,8 +1,8 @@
 [workspace]
 
 members = [
-  "husky",
-  "husky-lib",
-  "husky-lib-core",
-  "husky-auxies",
+  "huski",
+  "huski-lib",
+  "huski-lib-core",
+  "huski-auxies",
 ]

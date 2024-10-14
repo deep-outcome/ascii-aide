@@ -1,5 +1,5 @@
 use std::io::{stdout, Write};
-use husky_lib::{acquire, Ranges, Code};
+use huski_lib::{acquire, Ranges, Code};
 
 const INTRO: &str = "\n\n
         @****************************************************************************************************@

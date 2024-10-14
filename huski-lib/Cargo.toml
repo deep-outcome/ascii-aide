@@ -1,16 +1,16 @@
 [package]
-name = "husky-lib"
+name = "huski-lib"
 version = "1.0.0"
 authors= [ "software9119.technology" ]
 edition = "2021"
 description = "ASCII table aide library."
 readme = "./README.md"
-homepage = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib"
-repository = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib"
+homepage = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-lib"
+repository = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-lib"
 license = "MIT"
 keywords = ["ascii","ascii-table"]
 categories = ["encoding"]
 
 [dependencies]
-husky-lib-core = { path = "../husky-lib-core", version = "1.0.0"}
-husky-auxies = { path = "../husky-auxies", version = "1.0.0" }
+huski-lib-core = { path = "../huski-lib-core", version = "1.0.0"}
+huski-auxies = { path = "../huski-auxies", version = "1.0.0" }

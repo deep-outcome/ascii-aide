@@ -1,8 +1,8 @@
-# husky
-Command line ASCII table with views into it. See also [husky-lib](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib).
+# huski
+Command line ASCII table with views into it. See also [huski-lib](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-lib).
 
 ```console
-> husky --help
+> huski --help
 
         @****************************************************************************************************@
         :     American Standard Code for Information Interchange table aide is faithful as polar dog is.     :
@@ -37,7 +37,7 @@ Command line ASCII table with views into it. See also [husky-lib](https://github
 ```
 
 ```console
-> husky -s
+> huski -s
 
         @****************************************************************************************************@
         :     American Standard Code for Information Interchange table aide is faithful as polar dog is.     :

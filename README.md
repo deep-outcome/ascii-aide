@@ -1,8 +1,8 @@
 # ascii-aide
-Shared repository for husky command line utility and husky libraries.
+Shared repository for huski command line utility and huski libraries.
 
 ### further reference
-- [husky](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky)
-- [husky-lib](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib)
-- [husky-lib-core](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib-core)
-- [husky-auxies](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-auxies)
+- [huski](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski)
+- [huski-lib](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-lib)
+- [huski-lib-core](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-lib-core)
+- [huski-auxies](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-auxies)

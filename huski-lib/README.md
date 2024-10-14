@@ -1,12 +1,12 @@
-# husky-lib
-Facility for working with ASCII table and its views into it. Lib component of [husky](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky).
+# huski-lib
+Facility for working with ASCII table and its views into it. Lib component of [huski](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski).
 
-See also [husky-lib-core](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib-core).
+See also [huski-lib-core](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-lib-core).
 
 
  ```rust
- use husky_lib_core::ranges::{ranges, Ranges};
- use husky_lib::acquire;
+ use huski_lib_core::ranges::{ranges, Ranges};
+ use huski_lib::acquire;
 
  let rs = acquire(Ranges::Capital);
  assert_eq!('A', rs[0].code() as char);
@@ -14,8 +14,8 @@ See also [husky-lib-core](https://github.com/bravequickcleverfibreyarn/ascii-aid
  ```
 
  ```rust
- use husky_lib_core::ranges::LETTERS;
- use husky_lib::codes;
+ use huski_lib_core::ranges::LETTERS;
+ use huski_lib::codes;
 
  let cs = codes(&LETTERS);
  assert_eq!(52, cs.len());
