@@ -1,15 +1,16 @@
 [package]
 name = "huski-lib-core"
-version = "1.0.0"
+version = "1.0.1"
 authors= [ "software9119.technology" ]
 edition = "2021"
 description = "No std ASCII table aide library core."
 readme = "./README.md"
 homepage = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-lib-core"
 repository = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-lib-core"
+documentation = "https://docs.rs/huski-lib-core/latest/huski_lib_core"
 license = "MIT"
 keywords = ["ascii","ascii-table"]
 categories = ["no-std", "no-std::no-alloc", "encoding"]
 
 [dev-dependencies]
-huski-auxies = { path = "../huski-auxies", version = "1.0.0" }
+huski-auxies = { path = "../huski-auxies", version = "1.0.1" }

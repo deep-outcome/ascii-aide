@@ -1,3 +1,5 @@
+//! Auxiliaries for huski implementation.
+
 /// Collects and concats `RangeInclusive<usize>`s of
 /// literal listing into `Vec<usize>`.
 ///

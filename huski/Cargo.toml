@@ -1,6 +1,6 @@
 [package]
 name = "huski"
-version = "1.0.0"
+version = "1.0.1"
 authors= [ "software9119.technology" ]
 edition = "2021"
 description = "ASCII table aide command line utility."
@@ -12,4 +12,4 @@ keywords = ["ascii","ascii-table"]
 categories = ["encoding" , "command-line-utilities"]
 
 [dependencies]
-huski-lib = { path = "../huski-lib", version = "1.0.0" }
+huski-lib = { path = "../huski-lib", version = "1.0.1" }
