@@ -4,7 +4,6 @@ version = "1.0.0"
 authors= [ "software9119.technology" ]
 edition = "2021"
 description = "ASCII table aide library."
-documentation = ""
 readme = "./README.md"
 homepage = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib"
 repository = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib"
@@ -13,5 +12,5 @@ keywords = ["ascii","ascii-table"]
 categories = ["encoding"]
 
 [dependencies]
-husky-lib-core = { path = "../husky-lib-core" }
-husky-auxies = { path = "../husky-auxies" }
+husky-lib-core = { path = "../husky-lib-core", version = "1.0.0"}
+husky-auxies = { path = "../husky-auxies", version = "1.0.0" }

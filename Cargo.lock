@@ -3,7 +3,7 @@
 version = 3
 
 [[package]]
-name = "husky"
+name = "huski"
 version = "1.0.0"
 dependencies = [
  "husky-lib",

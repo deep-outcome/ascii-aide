@@ -4,13 +4,12 @@ version = "1.0.0"
 authors= [ "software9119.technology" ]
 edition = "2021"
 description = "No std ASCII table aide library core."
-documentation = ""
 readme = "./README.md"
 homepage = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib-core"
 repository = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib-core"
 license = "MIT"
 keywords = ["ascii","ascii-table"]
-categories = ["no-std, no-std::no-alloc", "encoding"]
+categories = ["no-std", "no-std::no-alloc", "encoding"]
 
 [dev-dependencies]
-husky-auxies = { path = "../husky-auxies" }
+husky-auxies = { path = "../husky-auxies", version = "1.0.0" }
