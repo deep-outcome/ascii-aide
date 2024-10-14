@@ -9,7 +9,7 @@ readme = "./README.md"
 homepage = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib-core"
 repository = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib-core"
 license = "MIT"
-keywords = ["ASCII"]
+keywords = ["ascii","ascii-table"]
 categories = ["no-std, no-std::no-alloc", "encoding"]
 
 [dev-dependencies]

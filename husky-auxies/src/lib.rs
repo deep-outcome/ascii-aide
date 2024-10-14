@@ -64,7 +64,6 @@ macro_rules! len {
 
 #[cfg(test)]
 mod tests_of_units {
-    use crate::{ccr1, ccr2};
 
     #[test]
     fn ccr1() {

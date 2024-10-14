@@ -18,6 +18,7 @@ pub mod ranges {
         }
     }
 
+    /// Code ranges.
     #[derive(Clone)]
     pub enum Ranges {
         /// Printable codes
@@ -41,28 +42,28 @@ pub mod ranges {
     use core::ops::RangeInclusive;
 
     /// Printable codes
-    pub const PRINTABLE: [RangeInclusive<usize>; 1] = [(32..=126)];
+    pub static PRINTABLE: [RangeInclusive<usize>; 1] = [(32..=126)];
     /// Control codes
-    pub const CONTROL: [RangeInclusive<usize>; 2] = [(0..=31), (127..=127)];
+    pub static CONTROL: [RangeInclusive<usize>; 2] = [(0..=31), (127..=127)];
     /// Capital letter codes
-    pub const CAPITAL: [RangeInclusive<usize>; 1] = [(65..=90)];
+    pub static CAPITAL: [RangeInclusive<usize>; 1] = [(65..=90)];
     /// Small letter codes
-    pub const SMALL: [RangeInclusive<usize>; 1] = [(97..=122)];
+    pub static SMALL: [RangeInclusive<usize>; 1] = [(97..=122)];
     /// All letter codes
-    pub const LETTERS: [RangeInclusive<usize>; 2] = [(65..=90), (97..=122)];
+    pub static LETTERS: [RangeInclusive<usize>; 2] = [(65..=90), (97..=122)];
     /// Digit codes
-    pub const DIGITS: [RangeInclusive<usize>; 1] = [(48..=57)];
+    pub static DIGITS: [RangeInclusive<usize>; 1] = [(48..=57)];
     /// Symbols codes
-    pub const SYMBOLS: [RangeInclusive<usize>; 4] = [(32..=47), (58..=64), (91..=96), (123..=126)];
+    pub static SYMBOLS: [RangeInclusive<usize>; 4] = [(32..=47), (58..=64), (91..=96), (123..=126)];
     /// Whole table codes
-    pub const TABLE: [RangeInclusive<usize>; 1] = [(0..=127)];
+    pub static TABLE: [RangeInclusive<usize>; 1] = [(0..=127)];
 
     #[cfg(test)]
     mod tests_of_units {
 
         extern crate std;
         use std::vec::Vec;
-        use super::{ranges as ranges_fn, *};
+        use crate::{ranges as ranges_fn, *};
         use husky_auxies::{ccr1, ccr2, len};
 
         #[test]
@@ -84,7 +85,7 @@ pub mod ranges {
 
             assert_eq!(1, PRINTABLE.len());
 
-            let printable = ccr2!(PRINTABLE);
+            let printable = ccr2!(&PRINTABLE);
             let proof = ccr1!(start..=end);
 
             assert_eq!(proof, printable);
@@ -98,7 +99,7 @@ pub mod ranges {
 
             assert_eq!(2, CONTROL.len());
 
-            let control = ccr2!(CONTROL);
+            let control = ccr2!(&CONTROL);
             let proof = ccr1!(start..=end, extra..=extra);
 
             assert_eq!(proof, control);
@@ -111,7 +112,7 @@ pub mod ranges {
 
             assert_eq!(1, CAPITAL.len());
 
-            let capital = ccr2!(CAPITAL);
+            let capital = ccr2!(&CAPITAL);
             let proof = ccr1!(start..=end);
 
             assert_eq!(proof, capital);
@@ -124,7 +125,7 @@ pub mod ranges {
 
             assert_eq!(1, SMALL.len());
 
-            let small = ccr2!(SMALL);
+            let small = ccr2!(&SMALL);
             let proof = ccr1!(start..=end);
 
             assert_eq!(proof, small);
@@ -140,7 +141,7 @@ pub mod ranges {
 
             assert_eq!(2, LETTERS.len());
 
-            let letters = ccr2!(LETTERS);
+            let letters = ccr2!(&LETTERS);
             let proof = ccr1!(start_c..=end_c, start_s..=end_s);
 
             assert_eq!(proof, letters);
@@ -152,7 +153,7 @@ pub mod ranges {
             let end = '9' as usize; // 57
 
             assert_eq!(1, DIGITS.len());
-            let digits = ccr2!(DIGITS);
+            let digits = ccr2!(&DIGITS);
             let proof = ccr1!(start..=end);
 
             assert_eq!(proof, digits);
@@ -173,7 +174,7 @@ pub mod ranges {
             let end_4 = '~' as usize; // 126
 
             assert_eq!(4, SYMBOLS.len());
-            let symbols = ccr2!(SYMBOLS);
+            let symbols = ccr2!(&SYMBOLS);
             let proof = ccr1!(
                 start_1..=end_1,
                 start_2..=end_2,
