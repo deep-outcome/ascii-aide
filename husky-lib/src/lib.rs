@@ -73,14 +73,14 @@ mod ranges {
 
     pub fn ranges(r: Ranges) -> &'static [RangeInclusive<usize>] {
         match r {
-            Ranges::Printable => &PRINTABLE,
-            Ranges::Control => &CONTROL,
-            Ranges::Capital => &CAPITAL,
-            Ranges::Small => &SMALL,
-            Ranges::Letters => &LETTERS,
-            Ranges::Digits => &DIGITS,
-            Ranges::Symbols => &SYMBOLS,
-            Ranges::Table => &TABLE,
+            | Ranges::Printable => &PRINTABLE,
+            | Ranges::Control => &CONTROL,
+            | Ranges::Capital => &CAPITAL,
+            | Ranges::Small => &SMALL,
+            | Ranges::Letters => &LETTERS,
+            | Ranges::Digits => &DIGITS,
+            | Ranges::Symbols => &SYMBOLS,
+            | Ranges::Table => &TABLE,
         }
     }
 
