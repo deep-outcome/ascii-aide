@@ -27,7 +27,7 @@ pub fn acquire(r: Ranges) -> Box<[Code]> {
 #[cfg_attr(test, derive(Debug, PartialEq))]
 pub struct Code {
     code: u8,
-    name: &'static str,
+    human: &'static str,
     desc: &'static str,
 }
 
@@ -38,9 +38,9 @@ impl Code {
         self.code
     }
 
-    /// Code name.
-    pub fn name(&self) -> &'static str {
-        self.name
+    /// Human representation.
+    pub fn human(&self) -> &'static str {
+        self.human
     }
 
     /// Code description.
@@ -76,7 +76,7 @@ pub fn codes(rs: &[RangeInclusive<usize>]) -> Vec<Code> {
             let info = TABLE[i];
             let code = Code {
                 code: i as u8,
-                name: info.0,
+                human: info.0,
                 desc: info.1,
             };
 
@@ -108,13 +108,13 @@ mod tests_of_units {
     #[test]
     fn code() {
         let code = 99;
-        let name = "name";
+        let human = "human";
         let desc = "desc";
 
-        let test = Code { code, name, desc };
+        let test = Code { code, human, desc };
 
         assert_eq!(code, test.code);
-        assert_eq!(name, test.name);
+        assert_eq!(human, test.human);
         assert_eq!(desc, test.desc);
     }
 
@@ -139,7 +139,7 @@ mod tests_of_units {
                     reix += 1;
 
                     assert_eq!(i as u8, t.code);
-                    assert_eq!(info.0, t.name);
+                    assert_eq!(info.0, t.human);
                     assert_eq!(info.1, t.desc);
                 }
             }
@@ -168,7 +168,7 @@ mod tests_of_units {
                 let t = &test[i];
 
                 assert_eq!(code as u8, t.code);
-                assert_eq!(info.0, t.name);
+                assert_eq!(info.0, t.human);
                 assert_eq!(info.1, t.desc);
             }
         }

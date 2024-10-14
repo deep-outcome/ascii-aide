@@ -26,7 +26,7 @@ pub mod ranges {
     }
 
     /// Code ranges.
-    #[derive(Clone)]
+    #[derive(Clone, PartialEq)]
     pub enum Ranges {
         /// Printable codes
         Printable,
@@ -70,7 +70,7 @@ pub mod ranges {
 
         extern crate std;
         use std::vec::Vec;
-        use super::{ranges as ranges_fn, *};        
+        use super::{ranges as ranges_fn, *};
         use husky_auxies::{ccr1, ccr2, len};
 
         #[test]
@@ -319,7 +319,7 @@ pub mod table {
         ("u", ""),
         ("v", ""),
         ("w", ""),
-        ("ccr", ""),
+        ("x", ""),
         ("y", ""),
         ("z", ""),
         ("{", "Left brace"),

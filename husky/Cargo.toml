@@ -1,6 +1,16 @@
 [package]
 name = "husky"
-version = "0.1.0"
+version = "1.0.0"
+authors= [ "software9119.technology" ]
 edition = "2021"
+description = "ASCII table aide command line utility."
+documentation = ""
+readme = "./README.md"
+homepage = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky"
+repository = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky"
+license = "MIT"
+keywords = ["ascii","ascii-table"]
+categories = ["encoding" , "command-line-utilities"]
 
 [dependencies]
+husky-lib = { path = "../husky-lib" }
