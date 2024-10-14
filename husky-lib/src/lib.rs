@@ -23,7 +23,7 @@ pub fn acquire(r: Ranges) -> Box<[Code]> {
     cs.into_boxed_slice()
 }
 
-/// Provides information about ASCII code.
+/// Provides information about ASCII code
 #[cfg_attr(test, derive(Debug, PartialEq))]
 pub struct Code {
     code: u8,

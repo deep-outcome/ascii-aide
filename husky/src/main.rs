@@ -125,15 +125,15 @@ fn main() {
 
     let ranges = ranges.unwrap();
     let codes = acquire(ranges.clone());
-    
+
     let mut output = String::with_capacity(3000);
-    
+
     if ranges == Ranges::Table {
         set(codes, &mut output, base);
     } else {
         subset(codes, &mut output, base);
     };
-    
+
     write(output.as_str());
 }
 
@@ -176,20 +176,20 @@ fn set(cs: Box<[Code]>, o: &mut String, b: Base) {
             }
         }
     }
-    
+
     fn b_set(c: u8) -> String {
         format!("| 0b{:>07b} |", c)
     }
-    
+
     fn o_set(c: u8) -> String {
         let zero_pad = format!("| 0o{:>03o}", c);
         format!("{:<11} |", zero_pad)
     }
-    
+
     fn d_set(c: u8) -> String {
         format!("| {:<9} |", c)
     }
-    
+
     fn h_set(c: u8) -> String {
         let zero_pad = format!("| 0x{:>02x}", c);
         format!("{:<11} |", zero_pad)
@@ -223,26 +223,25 @@ fn subset(cs: Box<[Code]>, o: &mut String, b: Base) {
         o.push_str("| ");
         o.push_str(c.desc());
     }
-    
+
     fn b_subset(c: u8) -> String {
         format!(" 0b{:>07b} |", c)
     }
-    
+
     fn o_subset(c: u8) -> String {
         let zero_pad = format!(" 0o{:>03o}", c);
         format!("{:^10} |", zero_pad)
     }
-    
+
     fn d_subset(c: u8) -> String {
         format!(" {:^9} |", c)
     }
-    
+
     fn h_subset(c: u8) -> String {
         let zero_pad = format!("0x{:>02x}", c);
         format!("{:^10} |", zero_pad)
     }
 }
-
 
 fn write(s: &str) {
     let mut so = stdout();
@@ -251,15 +250,15 @@ fn write(s: &str) {
             return;
         }
     }
-    
-    panic!("Problem writing output");    
+
+    panic!("Problem writing output");
 }
 
 fn aq_base(s: &str) -> Option<Base> {
     const NT: &str = "-nt:";
     if s.starts_with(NT) {
         if let Ok(b) = s[NT.len()..].parse::<u8>() {
-            for v in BASE_VARIANTS.iter().cloned() {                
+            for v in BASE_VARIANTS.iter().cloned() {
                 if v.clone() as u8 == b {
                     return Some(v);
                 }

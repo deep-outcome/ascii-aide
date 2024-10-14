@@ -25,7 +25,7 @@ pub mod ranges {
         }
     }
 
-    /// Code ranges.
+    /// Code ranges
     #[derive(Clone, PartialEq)]
     pub enum Ranges {
         /// Printable codes
@@ -197,7 +197,7 @@ pub mod ranges {
 /// Module contains ASCII code table information.
 pub mod table {
 
-    /// ASCII table information.
+    /// ASCII table information
     pub static TABLE: [(&str, &str); 128] = [
         ("NUL", "Null"),
         ("SOH", "Start of heading"),
