@@ -1,4 +1,4 @@
-# ascii-aide
+# husky
 Command line ASCII table with views into it. See also [husky-lib](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/husky-lib).
 
 ```console
