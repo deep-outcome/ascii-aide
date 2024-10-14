@@ -8,7 +8,16 @@ pub use husky_lib_core::table::TABLE;
 
 /// Same as `fn codes()` but it accepts `Ranges` as input
 /// and returns _boxed_ result.
-pub fn aquire(r: Ranges) -> Box<[Code]> {
+///
+/// ```
+/// use husky_lib_core::ranges::{ranges, Ranges};
+/// use husky_lib::acquire;
+///
+/// let rs = acquire(Ranges::Capital);
+/// assert_eq!('A', rs[0].code() as char);
+/// assert_eq!('Z', rs[25].code() as char);
+/// ```
+pub fn acquire(r: Ranges) -> Box<[Code]> {
     let rs = ranges(r);
     let cs = codes(&rs);
     cs.into_boxed_slice()
@@ -17,7 +26,7 @@ pub fn aquire(r: Ranges) -> Box<[Code]> {
 /// Provides information about ASCII code.
 #[cfg_attr(test, derive(Debug, PartialEq))]
 pub struct Code {
-    code: usize,
+    code: u8,
     name: &'static str,
     desc: &'static str,
 }
@@ -25,7 +34,7 @@ pub struct Code {
 /// Value acquisition.
 impl Code {
     /// Decimal code value.
-    pub fn code(&self) -> usize {
+    pub fn code(&self) -> u8 {
         self.code
     }
 
@@ -46,6 +55,15 @@ impl Code {
 /// function will panic.
 ///
 /// Duplicities and input order are preserved.
+/// ```
+/// use husky_lib_core::ranges::LETTERS;
+/// use husky_lib::codes;
+///
+/// let cs = codes(&LETTERS);
+/// assert_eq!(52, cs.len());
+/// assert_eq!('A', cs[0].code() as char);
+/// assert_eq!('z', cs[51].code() as char);
+/// ```
 pub fn codes(rs: &[RangeInclusive<usize>]) -> Vec<Code> {
     let mut codes = Vec::new();
     codes.reserve_exact(len!(rs));
@@ -57,7 +75,7 @@ pub fn codes(rs: &[RangeInclusive<usize>]) -> Vec<Code> {
         for i in r.clone() {
             let info = TABLE[i];
             let code = Code {
-                code: i,
+                code: i as u8,
                 name: info.0,
                 desc: info.1,
             };
@@ -77,12 +95,12 @@ pub fn codes(rs: &[RangeInclusive<usize>]) -> Vec<Code> {
 #[cfg(test)]
 mod tests_of_units {
     use husky_lib_core::ranges::{LETTERS, Ranges};
-    use crate::{Code, aquire as aquire_fn, codes as codes_fn};
+    use crate::{Code, acquire as acquire_fn, codes as codes_fn};
 
     #[test]
-    fn aquire() {
+    fn acquire() {
         let cs = codes_fn(&LETTERS);
-        let test = aquire_fn(Ranges::Letters);
+        let test = acquire_fn(Ranges::Letters);
 
         assert_eq!(cs.as_slice(), &*test);
     }
@@ -120,7 +138,7 @@ mod tests_of_units {
 
                     reix += 1;
 
-                    assert_eq!(i, t.code);
+                    assert_eq!(i as u8, t.code);
                     assert_eq!(info.0, t.name);
                     assert_eq!(info.1, t.desc);
                 }
@@ -149,7 +167,7 @@ mod tests_of_units {
 
                 let t = &test[i];
 
-                assert_eq!(code, t.code);
+                assert_eq!(code as u8, t.code);
                 assert_eq!(info.0, t.name);
                 assert_eq!(info.1, t.desc);
             }

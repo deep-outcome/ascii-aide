@@ -5,6 +5,13 @@
 pub mod ranges {
 
     /// Provides `&[RangeInclusive<usize>]` for demand of `r`.
+    /// ```
+    /// use husky_lib_core::ranges::{ranges, Ranges};    
+    ///
+    /// let rs = ranges(Ranges::Capital);
+    /// assert_eq!('A', rs[0].clone().min().unwrap() as u8 as char);
+    /// assert_eq!('Z', rs[0].clone().max().unwrap() as u8 as char);
+    /// ```
     pub fn ranges(r: Ranges) -> &'static [RangeInclusive<usize>] {
         match r {
             | Ranges::Printable => &PRINTABLE,
@@ -63,7 +70,7 @@ pub mod ranges {
 
         extern crate std;
         use std::vec::Vec;
-        use crate::{ranges as ranges_fn, *};
+        use super::{ranges as ranges_fn, *};        
         use husky_auxies::{ccr1, ccr2, len};
 
         #[test]

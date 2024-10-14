@@ -5,7 +5,25 @@ version = 3
 [[package]]
 name = "husky"
 version = "0.1.0"
+dependencies = [
+ "husky-lib",
+]
+
+[[package]]
+name = "husky-auxies"
+version = "1.0.0"
 
 [[package]]
 name = "husky-lib"
-version = "0.1.0"
+version = "1.0.0"
+dependencies = [
+ "husky-auxies",
+ "husky-lib-core",
+]
+
+[[package]]
+name = "husky-lib-core"
+version = "1.0.0"
+dependencies = [
+ "husky-auxies",
+]

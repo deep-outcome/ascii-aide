@@ -1,5 +1,11 @@
 /// Collects and concats `RangeInclusive<usize>`s of
 /// literal listing into `Vec<usize>`.
+///
+/// ```
+/// use husky_auxies::ccr1;
+/// let rs = ccr1!(0..=2,0..=3);
+///  assert_eq!(0, rs[3]);
+/// ```
 #[macro_export]
 macro_rules! ccr1 {
     ( $($r:expr),*) => {
@@ -33,6 +39,12 @@ macro_rules! ccr1 {
 
 /// Collects and concats `RangeInclusive<usize>`s from
 /// withing for-loop iteratable into `Vec<usize>`.
+///
+/// ```
+/// use husky_auxies::{len, ccr1, ccr2};
+/// let rs = ccr2!(&[0..=2,0..=3]);
+///  assert_eq!(0, rs[3]);
+/// ```
 #[macro_export]
 macro_rules! ccr2 {
     ($i:expr) => {{
@@ -51,6 +63,12 @@ macro_rules! ccr2 {
 
 #[macro_export]
 /// Computes cumulative length of `RangeInclusive`s from within for-loop iteratable.
+///
+/// ```
+/// use husky_auxies::len;
+/// let len = len!(&[0..=2,0..=3]);
+///  assert_eq!(7, len);
+/// ```
 macro_rules! len {
     ($i:expr) => {{
         let mut len = 0;
