@@ -2,9 +2,9 @@ use std::io::{stdout, Write};
 use huski_lib::{acquire, Ranges, Code};
 
 const INTRO: &str = "\n\n
-        @****************************************************************************************************@
-        :     American Standard Code for Information Interchange table aide is faithful as polar dog is.     :
-        @~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~@";
+        @***************************************************************************************************@
+        :    American Standard Code for Information Interchange table aide is faithful as arctic dog is.    :
+        @~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~@";
 
 const HELP: &str = "
         SUBSETS
@@ -41,12 +41,12 @@ const REFERENCE: &str = "
         https://www.ascii-code.com";
 
 const VERSION: &str = "
-        version    | 1.0.3
+        version    | 1.0.4
         repository | https://github.com/bravequickcleverfibreyarn/ascii-aide
         author     | software9119.technology";
 
 const ERR_NO_PARAM: &str = "\n
-        Err:: no valid parameter found";
+        Err:: no valid function parameter found";
 
 const INDENT: &str = "        ";
 

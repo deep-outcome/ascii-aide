@@ -4,9 +4,9 @@ Command line ASCII table with views into it. See also [huski-lib](https://github
 ```console
 > huski --help
 
-        @****************************************************************************************************@
-        :     American Standard Code for Information Interchange table aide is faithful as polar dog is.     :
-        @~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~@
+        @***************************************************************************************************@
+        :    American Standard Code for Information Interchange table aide is faithful as arctic dog is.    :
+        @~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~@
 
 
         SUBSETS
@@ -39,9 +39,9 @@ Command line ASCII table with views into it. See also [huski-lib](https://github
 ```console
 > huski -s
 
-        @****************************************************************************************************@
-        :     American Standard Code for Information Interchange table aide is faithful as polar dog is.     :
-        @~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~@
+        @***************************************************************************************************@
+        :    American Standard Code for Information Interchange table aide is faithful as arctic dog is.    :
+        @~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~@
 
 
           NUMERIC  | HUMAN | DESCRIPTION
