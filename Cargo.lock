@@ -4,7 +4,7 @@ version = 3
 
 [[package]]
 name = "huski"
-version = "1.0.4"
+version = "1.0.5"
 dependencies = [
  "huski-lib",
 ]
@@ -15,7 +15,7 @@ version = "1.0.1"
 
 [[package]]
 name = "huski-lib"
-version = "1.0.1"
+version = "1.0.2"
 dependencies = [
  "huski-auxies",
  "huski-lib-core",

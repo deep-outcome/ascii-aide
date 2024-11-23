@@ -34,17 +34,17 @@ pub struct Code {
 /// Value acquisition.
 impl Code {
     /// Decimal code value.
-    pub fn code(&self) -> u8 {
+    pub const fn code(&self) -> u8 {
         self.code
     }
 
     /// Human representation.
-    pub fn human(&self) -> &'static str {
+    pub const fn human(&self) -> &'static str {
         self.human
     }
 
     /// Code description.
-    pub fn desc(&self) -> &'static str {
+    pub const fn desc(&self) -> &'static str {
         self.desc
     }
 }
