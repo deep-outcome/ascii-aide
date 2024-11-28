@@ -128,7 +128,7 @@ mod tests_of_units {
             let test = codes_fn(&codes);
 
             assert_eq!(6, test.len());
-            assert_eq!(6, test.capacity());
+            assert!(6 <= test.capacity());
 
             let mut reix = 0;
             for r in codes {

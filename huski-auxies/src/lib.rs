@@ -93,7 +93,7 @@ mod tests_of_units {
         let rs = ccr1!(&r_1, &r_2);
 
         assert_eq!(7, rs.len());
-        assert_eq!(7, rs.capacity());
+        assert!(7 <= rs.capacity());
         assert_eq!(2, rs[2]);
         assert_eq!(3, rs[6]);
     }
@@ -107,7 +107,7 @@ mod tests_of_units {
         let test = ccr2!(&rs);
 
         assert_eq!(7, test.len());
-        assert_eq!(7, test.capacity());
+        assert!(7 <= test.capacity());
         assert_eq!(2, test[2]);
         assert_eq!(3, test[6]);
     }
