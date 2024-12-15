@@ -5,14 +5,23 @@ See also [huski-lib-core](https://github.com/bravequickcleverfibreyarn/ascii-aid
 
 
  ```rust
- use huski_lib_core::ranges::{ranges, Ranges};
- use huski_lib::acquire;
+use huski_lib_core::ranges::Ranges;
+use huski_lib::acquire;
 
- let rs = acquire(Ranges::Capital);
- assert_eq!('A', rs[0].code() as char);
- assert_eq!('Z', rs[25].code() as char);
+let rs = acquire(&[Ranges::Capital,Ranges::Small]);
+assert_eq!('A', rs[0].code() as char);
+assert_eq!('z', rs[51].code() as char);
  ```
 
+ ```rust
+use huski_lib_core::ranges::Ranges;
+use huski_lib::acquire_apart;
+
+let rs = acquire_apart(&[Ranges::Capital,Ranges::Small]);
+assert_eq!('A', rs[0][0].code() as char);
+assert_eq!('z', rs[1][25].code() as char);
+ ```
+ 
  ```rust
  use huski_lib_core::ranges::LETTERS;
  use huski_lib::codes;
