@@ -1,15 +1,14 @@
 [package]
 name = "huski"
-version = "1.0.5"
+version = "1.0.6"
 authors= [ "software9119.technology" ]
 edition = "2021"
 description = "ASCII table aide command line utility."
 readme = "./README.md"
-homepage = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski"
-repository = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski"
+repository = "https://github.com/deep-outcome/ascii-aide/tree/main/huski"
 license = "MIT"
 keywords = ["ascii","ascii-table"]
 categories = ["encoding" , "command-line-utilities"]
 
 [dependencies]
-huski-lib = { path = "../huski-lib", version = "1.0.2" }
+huski-lib = { path = "../huski-lib", version = "1.0.3" }
