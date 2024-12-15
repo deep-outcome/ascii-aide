@@ -6,25 +6,60 @@ use core::ops::RangeInclusive;
 pub use huski_lib_core::ranges::*;
 pub use huski_lib_core::table::TABLE;
 
-/// Same as `fn codes()` but it accepts `Ranges` as input
-/// and returns _boxed_ result.
+/// Similar to `fn codes()` but it accepts `&[Ranges]` as input
+/// and returns merged open result.
 ///
 /// ```
-/// use huski_lib_core::ranges::{ranges, Ranges};
+/// use huski_lib_core::ranges::Ranges;
 /// use huski_lib::acquire;
 ///
-/// let rs = acquire(Ranges::Capital);
+/// let rs = acquire(&[Ranges::Capital,Ranges::Small]);
 /// assert_eq!('A', rs[0].code() as char);
-/// assert_eq!('Z', rs[25].code() as char);
+/// assert_eq!('z', rs[51].code() as char);
 /// ```
-pub fn acquire(r: Ranges) -> Box<[Code]> {
-    let rs = ranges(r);
-    let cs = codes(&rs);
-    cs.into_boxed_slice()
+pub fn acquire(rs: &[Ranges]) -> Vec<Code> {
+    let mut len = 0;
+    for r in rs {
+        len += len!(ranges(r.clone()));
+    }
+
+    let mut merged = Vec::new();
+    merged.reserve_exact(len);
+    for r in rs {
+        merged.extend(to_codes(r.clone()).into_iter())
+    }
+    merged
+}
+
+/// Similar to `fn codes()` but it accepts `&[Ranges]` as input
+/// and returns open result in apart.
+///
+/// ```
+/// use huski_lib_core::ranges::Ranges;
+/// use huski_lib::acquire_apart;
+///
+/// let rs = acquire_apart(&[Ranges::Capital,Ranges::Small]);
+/// assert_eq!('A', rs[0][0].code() as char);
+/// assert_eq!('z', rs[1][25].code() as char);
+/// ```
+pub fn acquire_apart(rs: &[Ranges]) -> Vec<Vec<Code>> {
+    let mut many = Vec::new();
+    many.reserve_exact(rs.len());
+
+    for r in rs {
+        let codes = to_codes(r.clone());
+        many.push(codes);
+    }
+
+    many
+}
+
+fn to_codes(r: Ranges) -> Vec<Code> {
+    codes(ranges(r))
 }
 
 /// Provides information about ASCII code
-#[cfg_attr(test, derive(Debug, PartialEq))]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Code {
     code: u8,
     human: &'static str,
@@ -94,15 +129,62 @@ pub fn codes(rs: &[RangeInclusive<usize>]) -> Vec<Code> {
 
 #[cfg(test)]
 mod tests_of_units {
-    use huski_lib_core::ranges::{LETTERS, Ranges};
-    use crate::{Code, acquire as acquire_fn, codes as codes_fn};
+    use huski_lib_core::ranges::{Ranges, PRINTABLE};
+
+    use crate::{Code, to_codes as to_codes_fn, codes};
+
+    mod acquire {
+
+        use huski_lib_core::ranges::{LETTERS, SYMBOLS, Ranges};
+        use crate::{Code, acquire, codes};
+
+        #[test]
+        fn basic_test() {
+            let proof = codes(&LETTERS);
+            let test = acquire(&[Ranges::Letters]);
+
+            assert_eq!(proof, test);
+        }
+
+        #[test]
+        fn merging_test() {
+            let l = codes(&LETTERS);
+            let s = codes(&SYMBOLS);
+            let test = acquire(&[Ranges::Letters, Ranges::Symbols]);
+
+            let proof = l.into_iter().chain(s.into_iter()).collect::<Vec<Code>>();
+            assert_eq!(proof, test);
+        }
+    }
+
+    mod acquire_apart {
+
+        use huski_lib_core::ranges::{LETTERS, SYMBOLS, Ranges};
+        use crate::{acquire_apart, codes};
+
+        #[test]
+        fn basic_test() {
+            let proof = vec![codes(&LETTERS)];
+            let test = acquire_apart(&[Ranges::Letters]);
+
+            assert_eq!(proof, test);
+        }
+
+        #[test]
+        fn merging_test() {
+            let l = codes(&LETTERS);
+            let s = codes(&SYMBOLS);
+            let test = acquire_apart(&[Ranges::Letters, Ranges::Symbols]);
+
+            let proof = vec![l, s];
+            assert_eq!(proof, test);
+        }
+    }
 
     #[test]
-    fn acquire() {
-        let cs = codes_fn(&LETTERS);
-        let test = acquire_fn(Ranges::Letters);
-
-        assert_eq!(cs.as_slice(), &*test);
+    fn to_codes() {
+        let r = Ranges::Printable;
+        assert_eq!(codes(&PRINTABLE), to_codes_fn(r.clone()));
     }
 
     #[test]
