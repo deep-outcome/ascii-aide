@@ -1,5 +1,5 @@
 use std::io::{stdout, Write};
-use huski_lib::{acquire, Ranges, Code};
+use huski_lib::{acquire, acquire_apart, Ranges, Code};
 
 const INTRO: &str = "\n\n
         @***************************************************************************************************@
@@ -25,8 +25,11 @@ const HELP: &str = "
         ----------------------------
         --help   | this help
         -nt:base | number type, defaults to nt:10 = decimal, supports: binary, octal, decimal, hexadecimal
+        -tt:type | table type, defaults to tt:c = classic order, supports: s — special, c — classic 
+                 | if -tt:s prints subset ordered-table in order: lc,ls,d,s,c, works only with -t
         
         No parameter is same as --help. First known non-optional parameter is considered function match.
+        Similarly, first valid optional parameter is considered match.
         
         EXTRA
         ----------------------------
@@ -41,7 +44,7 @@ const REFERENCE: &str = "
         https://www.ascii-code.com";
 
 const VERSION: &str = "
-        version    | 1.0.7
+        version    | 1.1.0
         repository | https://github.com/bravequickcleverfibreyarn/ascii-aide
         author     | software9119.technology";
 
@@ -61,15 +64,19 @@ enum Base {
 static BASE_VARIANTS: [Base; 4] = [Base::Binary, Base::Octal, Base::Decimal, Base::Hexadecimal];
 
 static RANGES_MAP: [(&str, Ranges); 8] = [
-    ("-p", Ranges::Printable),
-    ("-c", Ranges::Control),
-    ("-lc", Ranges::Capital),
-    ("-ls", Ranges::Small),
-    ("-l", Ranges::Letters),
-    ("-d", Ranges::Digits),
-    ("-s", Ranges::Symbols),
-    ("-t", Ranges::Table),
+    (PRINTABLE_SUBSET_NAME, Ranges::Printable),
+    ("c", Ranges::Control),
+    ("lc", Ranges::Capital),
+    ("ls", Ranges::Small),
+    (LETTERS_SUBSET_NAME, Ranges::Letters),
+    ("d", Ranges::Digits),
+    ("s", Ranges::Symbols),
+    (TABLE_SET_NAME, Ranges::Table),
 ];
+
+const PRINTABLE_SUBSET_NAME: &str = "p";
+const LETTERS_SUBSET_NAME: &str = "l";
+const TABLE_SET_NAME: &str = "t";
 
 fn main() {
     write(INTRO);
@@ -86,8 +93,9 @@ fn main() {
     let ranges_map = RANGES_MAP.iter().cloned();
     let ranges_map: HashMap<&str, Ranges> = HashMap::from_iter(ranges_map);
 
-    let mut ranges = None;
-    for a in args.iter() {
+    let mut table_output = false;
+    let mut ranges = vec![];
+    'param: for a in args.iter() {
         match a.as_str() {
             | "-v" => {
                 write(VERSION);
@@ -101,16 +109,49 @@ fn main() {
                 write(HELP);
                 return;
             },
-            | x if ranges_map.contains_key(x) => {
-                let r = ranges_map.get(x).unwrap();
-                ranges = Some(r.clone());
+            | pmtr => {
+                if !pmtr.starts_with("-") {
+                    continue;
+                }
+
+                let name = &pmtr[1..];
+                if !ranges_map.contains_key(name) {
+                    continue;
+                }
+
+                if name == TABLE_SET_NAME {
+                    table_output = true;
+
+                    for a2 in args.iter() {
+                        const TABLE_TYPE_FLAG: &str = "-tt:";
+                        if a2.starts_with(TABLE_TYPE_FLAG) {
+                            let tt = &a2[TABLE_TYPE_FLAG.len()..];
+
+                            match tt {
+                                | "s" => {
+                                    ranges.push(Ranges::Capital);
+                                    ranges.push(Ranges::Small);
+                                    ranges.push(Ranges::Digits);
+                                    ranges.push(Ranges::Symbols);
+                                    ranges.push(Ranges::Control);
+
+                                    break 'param;
+                                },
+                                | "c" => break,
+                                | _ => continue,
+                            }
+                        }
+                    }
+                }
+
+                let r = ranges_map.get(name).unwrap();
+                ranges.push(r.clone());
                 break;
             },
-            | _ => {},
         }
     }
 
-    if ranges.is_none() {
+    if ranges.len() == 0 {
         write(ERR_NO_PARAM);
         return;
     }
@@ -123,21 +164,37 @@ fn main() {
         }
     }
 
-    let ranges = ranges.unwrap();
-    let codes = acquire(ranges.clone());
-
+    let ranges = ranges.as_slice();
     let mut output = String::with_capacity(3000);
 
-    if ranges == Ranges::Table {
-        set(codes, &mut output, base);
+    if table_output {
+        let apart = acquire_apart(ranges);
+
+        let special = apart.len() > 1;
+        let codes = if special {
+            let mut codes = Vec::new();
+            codes.reserve_exact(5 * 33);
+            for item in apart.iter() {
+                for i in 0..33 {
+                    codes.push(item.get(i))
+                }
+            }
+
+            codes
+        } else {
+            apart[0].iter().map(|x| Some(x)).collect()
+        };
+
+        set(codes.as_slice(), &mut output, base, special);
     } else {
-        subset(codes, &mut output, base);
+        let codes = acquire(ranges);
+        subset(codes.as_slice(), &mut output, base);
     };
 
     write(output.as_str());
 }
 
-fn set(cs: Box<[Code]>, o: &mut String, b: Base) {
+fn set(codes: &[Option<&Code>], o: &mut String, b: Base, special: bool) {
     let f = match b {
         | Base::Binary => b_set,
         | Base::Octal => o_set,
@@ -152,26 +209,46 @@ fn set(cs: Box<[Code]>, o: &mut String, b: Base) {
     o.push_str(HEADER);
     o.push_str(HEADER);
     o.push_str(HEADER);
+
+    if special {
+        o.push_str(HEADER);
+    }
+
     o.push('|');
     o.push('\n');
     o.push_str(INDENT);
     o.push_str("---------------------------------------------------------------------------------");
 
-    let cols = [0, 32, 64, 96];
-    for row in 0..32 {
+    if special {
+        o.push_str("--------------------");
+    }
+
+    let (cols, last_col_ix, rows): (&[usize], usize, usize) = if special {
+        const COLS: [usize; 5] = [0, 33, 66, 99, 132];
+        (&COLS, 132, 33)
+    } else {
+        const COLS: [usize; 4] = [0, 32, 64, 96];
+        (&COLS, 96, 32)
+    };
+
+    for row_ix in 0..rows {
         o.push('\n');
         o.push_str(INDENT);
 
-        for &col in cols.iter() {
-            let code = col + row;
+        for &col_ix in cols.iter() {
+            let ix = col_ix + row_ix;
 
-            let c = &cs[code];
-            let numeric = f(c.code());
-            o.push_str(numeric.as_str());
-            let human = format!("{:<7}", c.human());
-            o.push_str(human.as_str());
+            if let Some(c) = &codes[ix] {
+                let numeric = f(c.code());
+                let human = format!("{:<7}", c.human());
+                o.push_str(numeric.as_str());
+                o.push_str(human.as_str());
+            } else {
+                o.push_str("| ---       ");
+                o.push_str("| -     ");
+            };
 
-            if col == 96 {
+            if col_ix == last_col_ix {
                 o.push('|');
             }
         }
@@ -196,7 +273,7 @@ fn set(cs: Box<[Code]>, o: &mut String, b: Base) {
     }
 }
 
-fn subset(cs: Box<[Code]>, o: &mut String, b: Base) {
+fn subset(codes: &[Code], o: &mut String, b: Base) {
     let f = match b {
         | Base::Binary => b_subset,
         | Base::Octal => o_subset,
@@ -212,7 +289,7 @@ fn subset(cs: Box<[Code]>, o: &mut String, b: Base) {
     o.push_str(INDENT);
     o.push_str("-------------------------------------------------");
 
-    for c in cs.iter() {
+    for c in codes.iter() {
         o.push('\n');
         o.push_str(INDENT);
 
@@ -255,9 +332,9 @@ fn write(s: &str) {
 }
 
 fn aq_base(s: &str) -> Option<Base> {
-    const NT: &str = "-nt:";
-    if s.starts_with(NT) {
-        if let Ok(b) = s[NT.len()..].parse::<u8>() {
+    const NUMBER_TYPE_FLAG: &str = "-nt:";
+    if s.starts_with(NUMBER_TYPE_FLAG) {
+        if let Ok(b) = s[NUMBER_TYPE_FLAG.len()..].parse::<u8>() {
             for v in BASE_VARIANTS.iter().cloned() {
                 if v.clone() as u8 == b {
                     return Some(v);
