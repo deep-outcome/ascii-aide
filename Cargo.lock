@@ -15,7 +15,7 @@ version = "1.0.2"
 
 [[package]]
 name = "huski-lib"
-version = "1.0.2"
+version = "1.0.3"
 dependencies = [
  "huski-auxies",
  "huski-lib-core",
