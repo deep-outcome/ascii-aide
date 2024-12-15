@@ -1,6 +1,6 @@
 [package]
 name = "huski-lib-core"
-version = "1.0.2"
+version = "1.1.0"
 authors= [ "software9119.technology" ]
 edition = "2021"
 description = "No std ASCII table aide library core."

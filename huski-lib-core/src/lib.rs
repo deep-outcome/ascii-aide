@@ -12,7 +12,7 @@ pub mod ranges {
     /// assert_eq!('A', rs[0].clone().min().unwrap() as u8 as char);
     /// assert_eq!('Z', rs[0].clone().max().unwrap() as u8 as char);
     /// ```
-    pub fn ranges(r: Ranges) -> &'static [RangeInclusive<usize>] {
+    pub const fn ranges(r: Ranges) -> &'static [RangeInclusive<usize>] {
         match r {
             | Ranges::Printable => &PRINTABLE,
             | Ranges::Control => &CONTROL,
@@ -26,7 +26,7 @@ pub mod ranges {
     }
 
     /// Code ranges
-    #[derive(Clone, PartialEq)]
+    #[derive(Clone, PartialEq, Debug)]
     pub enum Ranges {
         /// Printable codes
         Printable,
