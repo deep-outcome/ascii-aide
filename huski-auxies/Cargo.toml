@@ -1,11 +1,10 @@
 [package]
 name = "huski-auxies"
-version = "1.0.1"
+version = "1.0.2"
 authors= [ "software9119.technology" ]
 edition = "2021"
 description = "Auxiliary methods for huski implementation."
 readme = "./README.md"
-homepage = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-auxies"
-repository = "https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-auxies"
+repository = "https://github.com/deep-outcome/ascii-aide/tree/main/huski-auxies"
 documentation = "https://docs.rs/huski-auxies/latest/huski_auxies"
 license = "MIT"
