@@ -1,11 +1,12 @@
 //! Auxiliaries for huski implementation.
 
-/// Collects and concats `RangeInclusive<usize>`s of
-/// literal listing into `Vec<usize>`.
+/// Collects and concats `RangeInclusive<usize>` expression
+/// listing into `Vec<usize>`.
 ///
 /// ```
 /// use huski_auxies::ccr1;
-/// let rs = ccr1!(0..=2,0..=3);
+/// let ri = 0..=3;
+/// let rs = ccr1!(0..=2,ri.clone());
 /// assert_eq!(0, rs[3]);
 /// ```
 #[macro_export]
@@ -39,12 +40,13 @@ macro_rules! ccr1 {
     }
 }
 
-/// Collects and concats `RangeInclusive<usize>`s from
-/// withing for-loop iteratable into `Vec<usize>`.
+/// Collects and concats `RangeInclusive<usize>`
+/// expressions from within for-loop iteratable into `Vec<usize>`.
 ///
 /// ```
 /// use huski_auxies::{len, ccr1, ccr2};
-/// let rs = ccr2!(&[0..=2,0..=3]);
+/// let ri = 0..=3;
+/// let rs = ccr2!(&[0..=2,ri.clone()]);
 /// assert_eq!(0, rs[3]);
 /// ```
 #[macro_export]
