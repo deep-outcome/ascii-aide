@@ -1,9 +1,9 @@
 [package]
 name = "huski-auxies"
-version = "1.0.3"
+version = "1.0.4"
 authors= [ "software9119.technology" ]
 edition = "2021"
-description = "Auxiliary methods for huski implementation."
+description = "Auxiliaries for huski implementation."
 readme = "./README.md"
 repository = "https://github.com/deep-outcome/ascii-aide/tree/main/huski-auxies"
 documentation = "https://docs.rs/huski-auxies/latest/huski_auxies"
