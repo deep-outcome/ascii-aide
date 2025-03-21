@@ -44,7 +44,7 @@ const REFERENCE: &str = "
         https://www.ascii-code.com";
 
 const VERSION: &str = "
-        version    | 1.1.0
+        version    | 1.1.1
         repository | https://github.com/deep-outcome/ascii-aide
         author     | software9119.technology";
 
