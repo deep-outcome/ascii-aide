@@ -1,5 +1,5 @@
 # huski
-Command line ASCII table with views into it. See also [huski-lib](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-lib).
+Command line ASCII table with views into it. See also [huski-lib](https://github.com/deep-outcome/ascii-aide/tree/main/huski-lib).
 
 ```console
 > huski --help

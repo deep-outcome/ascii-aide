@@ -1,2 +1,2 @@
 # huski-auxies
-Auxiliaries for [huski](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski) implementation.
+Auxiliaries for [huski](https://github.com/deep-outcome/ascii-aide/tree/main/huski) implementation.

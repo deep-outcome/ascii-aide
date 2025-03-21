@@ -1,7 +1,7 @@
 # huski-lib
-Facility for working with ASCII table and its views into it. Lib component of [huski](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski).
+Facility for working with ASCII table and its views into it. Lib component of [huski](https://github.com/deep-outcome/ascii-aide/tree/main/huski).
 
-See also [huski-lib-core](https://github.com/bravequickcleverfibreyarn/ascii-aide/tree/main/huski-lib-core).
+See also [huski-lib-core](https://github.com/deep-outcome/ascii-aide/tree/main/huski-lib-core).
 
 
  ```rust

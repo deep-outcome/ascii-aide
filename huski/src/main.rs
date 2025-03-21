@@ -45,7 +45,7 @@ const REFERENCE: &str = "
 
 const VERSION: &str = "
         version    | 1.1.0
-        repository | https://github.com/bravequickcleverfibreyarn/ascii-aide
+        repository | https://github.com/deep-outcome/ascii-aide
         author     | software9119.technology";
 
 const ERR_NO_PARAM: &str = "\n
