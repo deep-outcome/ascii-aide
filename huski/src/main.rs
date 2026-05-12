@@ -172,8 +172,7 @@ fn main() {
 
         let special = apart.len() > 1;
         let codes = if special {
-            let mut codes = Vec::new();
-            codes.reserve_exact(5 * 33);
+            let mut codes = Vec::with_capacity(5 * 33);
             for item in apart.iter() {
                 for i in 0..33 {
                     codes.push(item.get(i))
