@@ -23,8 +23,7 @@ pub fn acquire(rs: &[Ranges]) -> Vec<Code> {
         len += len!(ranges(r.clone()));
     }
 
-    let mut merged = Vec::new();
-    merged.reserve_exact(len);
+    let mut merged = Vec::with_capacity(len);
     for r in rs {
         merged.extend(to_codes(r.clone()).into_iter())
     }
@@ -43,8 +42,7 @@ pub fn acquire(rs: &[Ranges]) -> Vec<Code> {
 /// assert_eq!('z', rs[1][25].code() as char);
 /// ```
 pub fn acquire_apart(rs: &[Ranges]) -> Vec<Vec<Code>> {
-    let mut many = Vec::new();
-    many.reserve_exact(rs.len());
+    let mut many = Vec::with_capacity(rs.len());
 
     for r in rs {
         let codes = to_codes(r.clone());
@@ -100,8 +98,7 @@ impl Code {
 /// assert_eq!('z', cs[51].code() as char);
 /// ```
 pub fn codes(rs: &[RangeInclusive<usize>]) -> Vec<Code> {
-    let mut codes = Vec::new();
-    codes.reserve_exact(len!(rs));
+    let mut codes = Vec::with_capacity(len!(rs));
 
     let sc = codes.spare_capacity_mut();
 
@@ -256,3 +253,5 @@ mod tests_of_units {
         }
     }
 }
+
+// cargo fmt & cargo test --release
