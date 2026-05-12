@@ -13,14 +13,12 @@
 macro_rules! ccr1 {
     ( $($r:expr),*) => {
         {
-            let mut rs = Vec::<usize>::new();
-
             let mut cap = 0;
             $(
                 cap += $r.end() - $r.start() + 1;
             )*
 
-            rs.reserve_exact(cap);
+            let mut rs = Vec::<usize>::with_capacity(cap);
 
             $(
                 let sc = rs.spare_capacity_mut();
@@ -52,10 +50,8 @@ macro_rules! ccr1 {
 #[macro_export]
 macro_rules! ccr2 {
     ($i:expr) => {{
-        let mut rs = Vec::<usize>::new();
-
         let cap = len!($i);
-        rs.reserve_exact(cap);
+        let mut rs = Vec::<usize>::with_capacity(cap);
 
         for r in $i {
             rs.extend_from_slice(&ccr1!(r));
@@ -124,3 +120,5 @@ mod tests_of_units {
         assert_eq!(7, len);
     }
 }
+
+// cargo fmt & cargo test --release
